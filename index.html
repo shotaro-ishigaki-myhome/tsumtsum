@@ -3,44 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <title>ツムツム</title>
     <style>
-        .container {
+        html,body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 1);
+        }
+        .main {
             max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            margin: 20px auto;
+        }
+        .container {
+            width: 100%;
+            /* margin: 10px; */
         }
         .input-group {
             margin-bottom: 10px;
+        }
+        .newCoin{
+            max-width: 80px;
+        }
+        .scrollableElement {
+            width: 300px; /* 適当な幅 */
+            height: 200px; /* 適当な高さ */
+            overflow-y: auto; /* 縦方向のスクロールを有効にする */
+        }
+        #result {
+            background-color: rgba(255, 248, 240,1)
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>コイン数計算フォーム</h2>
-        <div class="input-group">
-            <label for="currentCoins">現在のコイン数：</label>
-            <input type="number" id="currentCoins" name="currentCoins" min="0" required>
-            <span>コイン</span>
+        <div class="main">
+            <h2>コイン数計算フォーム</h2>
+            <div class="input-group">
+                <label for="currentCoins">開始時のコイン：</label>
+                <input type="number" id="currentCoins" name="currentCoins" min="0" required>
+                <span>コイン</span>
+            </div>
+            <button onclick="addCoinInput()">追加</button>
+            <div id="coinInputs" class="scrollableElement"></div>
+            <div id="result">
+                <div><span>合計：</span><span id="total">10000</span><span>コイン</span></div>
+                <div><span>増加：</span><span id="plus">10000</span><span>コイン</span></div>
+                <div><span>(平均：</span><span id="avg">10000</span><span>コイン)</span></div>
+            </div>
         </div>
-        <button onclick="calculateCoins()">計算する</button>
-        <div id="result"></div>
     </div>
     <script>
-        function calculateCoins() {
-            var currentCoins = parseInt(document.getElementById("currentCoins").value);
-            var newCoins = parseInt(prompt("追加されたコイン数を入力してください:", ""));
-            if (isNaN(newCoins)) {
+        var count = 0;
+        function addCoinInput() {
+            var newCoin = parseInt(prompt("追加コイン数を入力:", ""));
+            if (isNaN(newCoin)) {
                 alert("数字を入力してください。");
                 return;
             }
-            var difference = newCoins - currentCoins;
-            var result = document.createElement("div");
-            result.textContent = "変化後のコイン数：" + newCoins + "コイン（変化量：" + difference + "コイン）";
-            document.getElementById("result").appendChild(result);
+            count = count + 1;
+            var newInput = document.createElement("div");
+            newInput.className = "input-group";
+            newInput.innerHTML = '<label>'+count+'回目</label><input type="number" class="newCoin" min="0" value='+newCoin+' required><span>コイン</span>';
+            document.getElementById("coinInputs").appendChild(newInput);
+            totalCoins();
+            $('.newCoin').off('blur');
+            $('.newCoin').on('blur',function() {
+                totalCoins();
+            });
         }
+
+        function totalCoins() {
+            var currentCoins = document.getElementById("currentCoins").value;
+            var coinContainer = document.getElementById("coinInputs");
+            var coinInputs = coinContainer.getElementsByClassName("newCoin");
+            var coinValues = [];
+            let total = 0;
+            for (var i = 0; i < coinInputs.length; i++) {
+                if(coinInputs[i].value.length > 0){
+                    total += parseInt(coinInputs[i].value);
+                    coinValues.push(parseInt(coinInputs[i].value));
+                }
+            }
+            $('#total').html(parseInt(currentCoins) + total);
+            $('#plus').html(total);
+            $('#avg').html(parseFloat(total / count).toFixed(1));
+        }
+
     </script>
 </body>
 </html>
