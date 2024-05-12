@@ -30,11 +30,41 @@
         }
         .scrollableElement {
             width: auto;
-            height: 200px; /* 適当な高さ */
+            height: 300px; /* 適当な高さ */
             overflow-y: auto; /* 縦方向のスクロールを有効にする */
         }
         #result {
-            background-color: rgba(255, 248, 240,1)
+            background-color: #9ed7f8;
+        }
+        #result > * {
+            font-size: 1.5rem;
+        }
+        .add-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #228bc8;
+            border: 1px solid #fff;
+            box-sizing: border-box;
+            width: 100%;
+            height: 50px;
+            padding: 0 6% 0 12%;
+            color: #fff;
+            font-size: 16px;
+            text-align: left;
+            text-decoration: none;
+            position: relative;
+            transition-duration: 0.2s;
+        }
+        .hr_line {
+            position: relative;
+            height: 1px;
+            border-width: 0;
+            background-color: #00bcd4;
+            background-image: -webkit-linear-gradient(left,
+            #00bcd4 0%,#283593 50%,#00bcd4 100%);
+            background-image:         linear-gradient(90deg,
+            #00bcd4 0%,#283593 50%,#00bcd4 100%);
         }
     </style>
 </head>
@@ -54,12 +84,14 @@
                 <input type="checkbox" id="2" name="item" value="1800" />
                 <label for="scales">5->4</label>
             </div>
-            <button onclick="addCoinInput()">追加</button>
+            <button class="add-btn" onclick="addCoinInput()">追加</button>
+            <hr class="hr_line" />
             <div id="coinInputs" class="scrollableElement"></div>
+            <hr class="hr_line" />
             <div id="result">
-                <div><span>合計：</span><span id="total">10000</span><span>コイン</span></div>
-                <div><span>増加：</span><span id="plus">10000</span><span>コイン</span></div>
-                <div><span>(平均：</span><span id="avg">10000</span><span>コイン)</span></div>
+                <div><span>合計：</span><span id="total">0</span><span>コイン</span></div>
+                <div><span>増加：</span><span id="plus">0</span><span>コイン</span></div>
+                <div><span>(平均：</span><span id="avg">0</span><span>コイン)</span></div>
             </div>
         </div>
     </div>
