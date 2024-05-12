@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ツムツム</title>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>コイン数計算フォーム</h2>
+        <div class="input-group">
+            <label for="currentCoins">現在のコイン数：</label>
+            <input type="number" id="currentCoins" name="currentCoins" min="0" required>
+            <span>コイン</span>
+        </div>
+        <button onclick="calculateCoins()">計算する</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function calculateCoins() {
+            var currentCoins = parseInt(document.getElementById("currentCoins").value);
+            var newCoins = parseInt(prompt("追加されたコイン数を入力してください:", ""));
+            if (isNaN(newCoins)) {
+                alert("数字を入力してください。");
+                return;
+            }
+            var difference = newCoins - currentCoins;
+            var result = document.createElement("div");
+            result.textContent = "変化後のコイン数：" + newCoins + "コイン（変化量：" + difference + "コイン）";
+            document.getElementById("result").appendChild(result);
+        }
+    </script>
+</body>
+</html>
+
