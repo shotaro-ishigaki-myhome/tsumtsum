@@ -1,0 +1,65 @@
+@charset "UTF-8";
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+}
+
+.main {
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.container {
+  width: 100%;
+  /* margin: 10px; */
+}
+
+.input-group {
+  margin-bottom: 10px;
+}
+
+.newCoin, .resultCoin, .costCoin {
+  max-width: 3rem;
+}
+
+.scrollableElement {
+  width: auto;
+  height: 300px; /* 適当な高さ */
+  overflow-y: auto; /* 縦方向のスクロールを有効にする */
+}
+
+#result {
+  background-color: #9ed7f8;
+}
+
+#result > * {
+  font-size: 1.5rem;
+}
+
+.add-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #228bc8;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  padding: 0 6% 0 12%;
+  color: #fff;
+  font-size: 16px;
+  text-align: left;
+  text-decoration: none;
+  position: relative;
+  transition-duration: 0.2s;
+}
+
+.hr_line {
+  position: relative;
+  height: 1px;
+  border-width: 0;
+  background-color: #00bcd4;
+  background-image: linear-gradient(90deg, #00bcd4 0%, #283593 50%, #00bcd4 100%);
+}
