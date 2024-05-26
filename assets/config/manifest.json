@@ -2,7 +2,7 @@
   "name": "TSUMTSUM Coin Check",
   "short_name": "TSUM Chk",
   "start_url": "../../index.html",
-  "display": "standalone",
+  "display": "browser",
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "icons": [
