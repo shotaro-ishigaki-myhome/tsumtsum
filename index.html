@@ -1,90 +1,85 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/vender/js/agh.sprintf.js"></script>
     <title>ツムツム</title>
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+
+    <!-- スマホショートカット作成時 -->
+    <link rel="manifest" href="/assets/config/manifest.json">
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/img/icon.svg">
 </head>
+
 <body>
+
+    <!-- モーダル -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>入力欄</h2>
+            <label for="raw_coin">素コイン:</label>
+            <input type="text" id="raw_coin" class="modal-input" maxlength="7" inputmode="numeric">
+            <label for="get_coin">獲得コイン:</label>
+            <input type="text" id="get_coin" class="modal-input" maxlength="7" inputmode="numeric">
+            <button id="registerBtn">登録</button>
+        </div>
+    </div>
     <div class="container">
+
+        <!-- <button id="openModalBtn">モーダルを開く</button> -->
         <div class="main">
             <h2>コイン数計算フォーム</h2>
             <div class="input-group">
                 <label>使用するアイテム</label>
-                <input type="checkbox" id="1" name="item" value="500" checked />
+                <input type="checkbox" id="1" name="item" value="500" checked="">
                 <label for="scales">コイン+</label>
-                <input type="checkbox" id="2" name="item" value="1800" />
-                <label for="scales">5->4</label>
+                <input type="checkbox" id="2" name="item" value="1800">
+                <label for="scales">5-&gt;4</label>
             </div>
-            <button class="add-btn" onclick="addCoinInput()">追加</button>
-            <hr class="hr_line" />
-            <div id="coinInputs" class="scrollableElement"></div>
-            <hr class="hr_line" />
+
+            <!-- <button class="add-btn" onclick="addCoinInput()">追加</button> -->
+            <button id="openModalBtn" class="add-btn">追加</button>
+            <hr class="hr_line">
+
+            <!-- 実績記録表示欄 -->
+            <div id="coinInputs" class="scrollableElement">
+                <table>
+                    <colgroup>
+                        <col style="width: 4rem;">
+                        <col style="width: 7rem;">
+                        <col style="width: 7rem;">
+                        <col style="width: 7rem;">
+                        <col style="width: 5rem;">
+                        <col style="width: 5rem;">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>回目</th>
+                            <th>結果</th>
+                            <th>獲得coin</th>
+                            <th>素coin</th>
+                            <th>倍率</th>
+                            <th>アイテム</th>
+                        </tr>
+                    </thead>
+                    <tbody id="result_list"></tbody>
+                </table>
+            </div>
+            <hr class="hr_line">
             <div id="result">
                 <div><span>増加：</span><span id="plus">0</span><span>コイン</span></div>
                 <div><span>(平均：</span><span id="avg">0</span><span>コイン)</span></div>
             </div>
         </div>
     </div>
-    <script>
-        var count = 0;
-        function addCoinInput() {
-            var newCoin = parseInt(prompt("追加コイン数を入力:", ""));
-            if (isNaN(newCoin)) {
-                alert("数字を入力してください。");
-                return;
-            }
-            count = count + 1;
-            var newInput = document.createElement("div");
-            newInput.className = "input-group";
-            newInput.innerHTML = '<label>'+count+'回目</label>' +
-                                '<input type="number" class="resultCoin" min="0" value='+(newCoin - itemCost())+' readonly>' +
-                                '= <input type="number" class="newCoin" min="0" value='+newCoin+' >' +
-                                '- <label>item</label><input type="number" class="costCoin" min="0" value='+itemCost()+' >';
-            document.getElementById("coinInputs").appendChild(newInput);
-            totalCoins();
-            $('.resultCoin, .newCoin, .costCoin').off('blur').on('blur',function() {
-                totalCoins();
-            });
-        }
-        function itemCost(){
-            var itemValues = 0;
-            $('input[type="checkbox"][name="item"]:checked').map(function() {
-                itemValues += parseInt($(this).val());
-            }).get();
-            return itemValues;
-        }
-        function reCalculation(){
-            let $coin_list = $('#coinInputs > .input-group');
-            for(i=0;i < $coin_list.length; i++){
-                console.log($($coin_list[i]).children('.resultCoin').get(0).value);
-                $($coin_list[i]).children('.resultCoin').get(0).value
-                = $($coin_list[i]).children('.newCoin').get(0).value
-                - $($coin_list[i]).children('.costCoin').get(0).value;
-            }
-        }
-
-        function totalCoins() {
-            reCalculation();
-            var coinContainer = document.getElementById("coinInputs");
-            var coinInputs = coinContainer.getElementsByClassName("resultCoin");
-            var coinValues = [];
-            let total = 0;
-            for (var i = 0; i < coinInputs.length; i++) {
-                if(coinInputs[i].value.length > 0){
-                    total += parseInt(coinInputs[i].value);
-                    coinValues.push(parseInt(coinInputs[i].value));
-                }
-            }
-            $('#plus').html(total);
-            $('#avg').html(parseFloat(total / count).toFixed(1));
-        }
-
-    </script>
+    <script src="assets/js/script.js"></script>
 </body>
-</html>
 
+</html>

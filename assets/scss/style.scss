@@ -1,8 +1,17 @@
+$base_color:#228bc8;
+$sub_color:#9ed7f8;
+html {
+    font-size: 62.5%; /* 基準フォントサイズを10pxに設定 */
+}
 html,body {
     padding: 0;
     margin: 0;
     width: 100%;
     background-color: rgba(255, 255, 255, 1);
+}
+body {
+    font-family: Arial, sans-serif;
+    font-size: 1.6rem;
 }
 .main {
     max-width: 400px;
@@ -15,7 +24,7 @@ html,body {
 .input-group {
     margin-bottom: 10px;
 }
-.newCoin,.resultCoin,.costCoin{
+.newCoin, .costCoin{
     max-width: 3rem;
 }
 .scrollableElement {
@@ -24,7 +33,7 @@ html,body {
     overflow-y: auto; /* 縦方向のスクロールを有効にする */
 }
 #result {
-    background-color: #9ed7f8;
+    background-color: $sub_color;
 }
 #result > * {
     font-size: 1.5rem;
@@ -33,7 +42,7 @@ html,body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #228bc8;
+    background: $base_color;
     border: 1px solid #fff;
     box-sizing: border-box;
     width: 100%;
@@ -55,4 +64,126 @@ html,body {
     #00bcd4 0%,#283593 50%,#00bcd4 100%);
     background-image:         linear-gradient(90deg,
     #00bcd4 0%,#283593 50%,#00bcd4 100%);
+}
+// ======================
+// テーブル要素
+// ======================
+table {
+    /* width: 23rem; */
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1.6rem; /* テーブル内のフォントサイズを1.6remに設定 */
+    text-align: left;
+    table-layout: auto; /* 列幅を内容に合わせて自動調整 */
+
+    thead tr {
+        background-color: $base_color;
+        color: #ffffff;
+        text-align: left;
+        font-weight: bold;
+    }
+    th,td {
+        padding: 8px 4px; /* パディングを修正 */
+    }
+    tbody {
+        tr {
+            border-bottom: 1px solid #dddddd;
+            td {
+                /* 各データ項目に合わせた入力フィールドの幅 */
+                input[type="text"].int3 {
+                    width: 4rem;
+                }
+
+                input[type="text"].char7 {
+                    width: 7rem; /* 獲得の列幅を調整 */
+                }
+
+                input[type="text"].char6 {
+                    width: 7rem;
+                }
+
+                input[type="text"].float4 {
+                    width: 5rem;
+                }
+
+                input[type="text"].int4 {
+                    width: 5rem;
+                }
+
+                input[type="text"] {
+                    padding: 5px;
+                    font-size: 1.4rem; /* テキストボックス内のフォントサイズを1.4remに設定 */
+                    border: 1px solid #dddddd;
+                    box-sizing: border-box;
+                }
+            }
+        }
+        tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+        tr:hover {
+            // background-color: #f1f1f1;
+            background-color: $sub_color;
+            cursor: pointer;
+        }
+    }
+
+}
+// ====================
+// モーダル要素
+// ====================
+.modal {
+    display: none; /* 初期は非表示 */
+    position: fixed; /* 画面の固定位置 */
+    z-index: 1; /* 表示順序 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4); /* 背景色 */
+    overflow: auto; /* ページのスクロールを許可 */
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* 画面幅の80%に調整 */
+        max-width: 400px; /* 最大幅を設定 */
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-input {
+            width: calc(100% - 16px); /* テキストボックスの幅を調整 */
+            margin-bottom: 10px;
+            padding: 8px; /* テキストボックスの余白を調整 */
+            box-sizing: border-box; /* テキストボックスのサイズにpaddingを含める */
+            font-size: 1.6rem; /* テキストボックスのフォントサイズを調整 */
+        }
+        #registerBtn {
+            background-color: #4CAF50; /* グリーン */
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.6rem;
+            margin-top: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    }
+
 }
